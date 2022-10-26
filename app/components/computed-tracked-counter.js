@@ -3,16 +3,20 @@ import { tracked } from '@glimmer/tracking';
 // eslint-disable-next-line ember/no-computed-properties-in-native-classes
 import { action, computed } from '@ember/object';
 
-export default class ComputedTrackedCounter extends Component {
+class Nested {
   @tracked count = 0;
+}
 
-  @computed('count')
-  get computedCount() {
-    return this.count;
+export default class ComputedTrackedCounter extends Component {
+  obj = new Nested();
+
+  @computed('obj.count')
+  get count() {
+    return this.obj.count;
   }
 
   @action
   increment() {
-    this.count++;
+    this.obj.count++;
   }
 }
