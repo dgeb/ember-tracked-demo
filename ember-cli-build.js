@@ -4,7 +4,15 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
-    // Add options here
+    autoImport: {
+      // Webpack should exclude @glimmer/validator from the output bundle,
+      // instead relying upon the version bundled with Ember.
+      webpack: {
+        externals: {
+          '@glimmer/validator': 'commonjs @glimmer/validator',
+        },
+      },
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
